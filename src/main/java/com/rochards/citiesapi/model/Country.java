@@ -13,8 +13,11 @@ public class Country {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    @Column(name = "nome")
+    private String name;
+
     @Column(name = "nome_pt")
-    private String ptName;
+    private String portugueseName;
 
     @Column(name = "sigla")
     private String code;
