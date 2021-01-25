@@ -8,8 +8,11 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/countries")
@@ -21,5 +24,11 @@ public class CountryController {
     @GetMapping
     public ResponseEntity<Page<Country>> getAllCountries(Pageable page) {
         return ResponseEntity.ok(countryRepository.findAll(page));
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Country> getCountryById(@PathVariable Long id) {
+        Optional<Country> optCountry = countryRepository.findById(id);
+        return optCountry.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 }
